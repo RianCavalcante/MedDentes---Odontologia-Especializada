@@ -1,6 +1,19 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
+// Safely access API key to prevent "process is not defined" crashes in browser
+const getApiKey = () => {
+  try {
+    // Check if process is defined (Node/Webpack/Vite with define)
+    if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+      return process.env.API_KEY;
+    }
+  } catch (e) {
+    console.warn("Could not access environment variables safely.");
+  }
+  return '';
+};
+
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey });
 
 // In-memory cache to prevent refetching images on simple re-renders

@@ -347,20 +347,19 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="md:w-3/5 relative min-h-[400px] bg-slate-200">
-               <div className="absolute inset-0 bg-cover bg-center grayscale opacity-80" style={{backgroundImage: "url('https://static.maps.cne.uol.com.br/images/google-maps.png')"}}></div>
-               <div className="absolute inset-0 flex items-center justify-center">
-                  <a 
-                    href={CONTACT_INFO.addressLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="bg-white text-slate-800 px-8 py-4 rounded-full font-bold shadow-2xl hover:scale-105 transition-transform flex items-center gap-3 border border-slate-100"
-                  >
-                    <MapPin size={24} className="text-[#3757A0]" />
-                    <span>Abrir Localização</span>
-                  </a>
-               </div>
+            {/* Google Maps Embed */}
+            <div className="md:w-3/5 relative min-h-[400px] bg-slate-200 h-full">
+               <iframe 
+                 width="100%" 
+                 height="100%" 
+                 className="absolute inset-0 w-full h-full"
+                 title="Mapa de Localização MedDentes"
+                 src="https://maps.google.com/maps?q=MedDentes%20Odontologia%20Especializada&t=&z=15&ie=UTF8&iwloc=B&output=embed"
+                 style={{border: 0}} 
+                 allowFullScreen
+                 loading="lazy" 
+                 referrerPolicy="no-referrer-when-downgrade">
+               </iframe>
             </div>
           </div>
         </div>
