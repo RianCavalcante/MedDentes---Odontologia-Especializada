@@ -1,20 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Safely access API key to prevent "process is not defined" crashes in browser
-const getApiKey = () => {
-  try {
-    // Check if process is defined (Node/Webpack/Vite with define)
-    if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-      return process.env.API_KEY;
-    }
-  } catch (e) {
-    console.warn("Could not access environment variables safely.");
-  }
-  return '';
-};
-
-const apiKey = getApiKey();
-const ai = new GoogleGenAI({ apiKey });
+// Initialize the client with the API key from environment variables
+// Assume process.env.API_KEY is available and valid as per guidelines
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // In-memory cache to prevent refetching images on simple re-renders
 const imageCache: Record<string, string> = {};
@@ -51,11 +39,6 @@ const compressImage = async (base64Str: string, quality = 0.7): Promise<string> 
 };
 
 export const generateDentalImage = async (prompt: string): Promise<string | null> => {
-  if (!apiKey) {
-    console.warn("API Key is missing. Using fallback images.");
-    return null;
-  }
-
   // Check cache first
   if (imageCache[prompt]) {
     return imageCache[prompt];
